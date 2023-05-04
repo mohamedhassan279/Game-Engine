@@ -1,5 +1,5 @@
 import { GameEngine } from '../GameEngine.js';
-export class Eight_Queens extends GameEngine{
+export class EightQueens extends GameEngine{
     constructor() {
         super();
     }
@@ -55,7 +55,8 @@ export class Eight_Queens extends GameEngine{
             }
         }
     }
-    Controller(state ,input) {
+    controller(state ,input) {
+        console.log(state, input);
         if(input === null||input === undefined || (input.length != 2 && input.length != 9)){console.log(state);
             return [state,false];}
         try{
@@ -120,6 +121,7 @@ export class Eight_Queens extends GameEngine{
                     return [state,false];
                 }
             }
+            return [state,false];
         }
         catch(error){console.log(state);
             return [state,false];}
