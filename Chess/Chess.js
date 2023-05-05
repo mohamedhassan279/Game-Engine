@@ -70,6 +70,7 @@ export class Chess extends GameEngine {
             let fromC = input[1].charCodeAt(0) - 'a'.charCodeAt(0);
             let toR = 8 - Number(input[3]);
             let toC = input[4].charCodeAt(0) - 'a'.charCodeAt(0);
+            console.log(fromR, fromC, toR, toC);
             if (fromR < 0 || fromR >= 8 || fromC < 0 || fromC >= 8
                 || toR < 0 || toR >= 8 || toC < 0 || toC >= 8) {
                 return [state, false];
@@ -81,6 +82,7 @@ export class Chess extends GameEngine {
             }
             else {
                 if (!this.canMove(state, fromR, fromC, toR, toC)) {
+                    console.log("###");
                     return [state, false];
                 }
                 state[0][toR][toC] = state[0][fromR][fromC];
@@ -113,12 +115,12 @@ export class Chess extends GameEngine {
     }
 
     pawnCanMove(state, fromR, fromC, toR, toC) {
-        let direction = turn ? 1 : -1;
+        let direction = state[1] ? 1 : -1;
         if (fromC === toC) {
             if (fromR + direction === toR && state[0][toR][toC] == '') { // one move
                 return true
             }
-            if (fromR + 2 * direction === toR && fromR === (turn ? 1 : 6) &&
+            if (fromR + 2 * direction === toR && fromR === (state[1] ? 1 : 6) &&
                 state[0][toR][toC] == '' && state[0][fromR + direction][toC] == "") { // double move
                 return true
             }
