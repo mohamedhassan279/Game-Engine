@@ -60,7 +60,7 @@ export class Chess extends GameEngine {
             }
         }
     }
-    
+
     controller(state, input) {
         if (input === null || input === undefined || input.length != 5) {
             return [state, false];
@@ -80,8 +80,13 @@ export class Chess extends GameEngine {
                 return [state, false];
             }
             else {
-                if (!this.canMove(state, fromR, fromC, toR, toC))
+                if (!this.canMove(state, fromR, fromC, toR, toC)) {
                     return [state, false];
+                }
+                state[0][toR][toC] = state[0][fromR][fromC];
+                state[0][fromR][fromC] = "";
+                state[1] = state[1] ? 0 : 1;
+                return [state, true];
             }
         }
         catch (error) {
@@ -94,12 +99,16 @@ export class Chess extends GameEngine {
         switch (piece) {
             case '♟': //pawn
                 return this.pawnCanMove(state, fromR, fromC, toR, toC);
-            case '♚':
+            case '♚': //king
                 return this.kingCanMove(state, fromR, fromC, toR, toC);
-            case '♛':
+            case '♛': //queen
                 return this.queenCanMove(state, fromR, fromC, toR, toC);
-            case '♜':
+            case '♜': //rock
                 return this.rockCanMove(state, fromR, fromC, toR, toC);
+            case '♝': //bishop
+                return this.bishopCanMove(state, fromR, fromC, toR, toC);
+            case '♞': //knight
+                return this.knightCanMove(state, fromR, fromC, toR, toC);
         }
     }
 
@@ -170,5 +179,52 @@ export class Chess extends GameEngine {
         return false;
     }
 
+    rockCanMove(state, fromR, fromC, toR, toC) {
+        if (fromR === toR) { // horizontal
+            let colDir = toC > fromC ? 1 : -1;
+            let j = fromC + colDir;
+            while (j !== toC) {
+                if (state[0][toR][j] != "") {
+                    return false; // Obstruction detected
+                }
+                j += colDir;
+            }
+            return true;
+        }
+        if (fromC === toC) { //vertical
+            let rowDir = toR > fromR ? 1 : -1;
+            let i = fromR + rowDir;
+            while (i !== toR) {
+                if (state[0][toC][i] != "") {
+                    return false; // Obstruction detected
+                }
+                i += rowDir;
+            }
+            return true;
+        }
+    }
 
+    bishopCanMove(state, fromR, fromC, toR, toC) {
+        if (Math.abs(fromR - toR) === Math.abs(fromC - toC)) { // diagonal
+            let rowDir = toR > fromR ? 1 : -1;
+            let colDir = toC > toR ? 1 : -1;
+            let i = fromR + rowDir;
+            let j = fromC + colDir;
+            while (i !== toR && j !== toC) {
+                if (state[0][i][j] != "") {
+                    return false; // Obstruction detected
+                }
+                i += rowDir;
+                j += colDir;
+            }
+            return true;
+        }
+    }
+
+    knightCanMove(state, fromR, fromC, toR, toC) {
+        if ((Math.abs(fromR - toR) === 2 && Math.abs(fromC - toC) === 1) ||
+            (Math.abs(fromR - toR) === 1 && Math.abs(fromC - toC) === 2)) {
+            return true;
+        }
+    }
 }
