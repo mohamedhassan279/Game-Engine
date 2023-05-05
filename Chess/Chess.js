@@ -171,7 +171,7 @@ export class Chess extends GameEngine {
             let rowDir = toR > fromR ? 1 : -1;
             let i = fromR + rowDir;
             while (i !== toR) {
-                if (state[0][toC][i] != "") {
+                if (state[0][i][toC] != "") {
                     return false; // Obstruction detected
                 }
                 i += rowDir;
@@ -197,7 +197,7 @@ export class Chess extends GameEngine {
             let rowDir = toR > fromR ? 1 : -1;
             let i = fromR + rowDir;
             while (i !== toR) {
-                if (state[0][toC][i] != "") {
+                if (state[0][i][toC] != "") {
                     return false; // Obstruction detected
                 }
                 i += rowDir;
