@@ -70,7 +70,6 @@ export class Chess extends GameEngine {
             let fromC = input[1].charCodeAt(0) - 'a'.charCodeAt(0);
             let toR = 8 - Number(input[3]);
             let toC = input[4].charCodeAt(0) - 'a'.charCodeAt(0);
-            console.log(fromR, fromC, toR, toC);
             if (fromR < 0 || fromR >= 8 || fromC < 0 || fromC >= 8
                 || toR < 0 || toR >= 8 || toC < 0 || toC >= 8) {
                 return [state, false];
@@ -82,7 +81,23 @@ export class Chess extends GameEngine {
             }
             else {
                 if (!this.canMove(state, fromR, fromC, toR, toC)) {
-                    console.log("###");
+                    return [state, false];
+                }
+                let tempState = this.simulate(state, fromR, fromC, toR, toC);
+                let kingR, kingC;
+                for (let row = 0; row < 8; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        if (tempState[0][row][col] == "") {
+                            continue;
+                        }
+                        if (Number(tempState[0][row][col][0]) != tempState[1] &&
+                            tempState[0][row][col][1] === '♚') {
+                            kingR = row;
+                            kingC = col;
+                        }
+                    }
+                }
+                if (this.isKingInCheck(tempState, kingR, kingC)) {
                     return [state, false];
                 }
                 state[0][toR][toC] = state[0][fromR][fromC];
@@ -96,6 +111,7 @@ export class Chess extends GameEngine {
         }
 
     }
+
     canMove(state, fromR, fromC, toR, toC) {
         let piece = state[0][fromR][fromC][1];
         switch (piece) {
@@ -114,15 +130,58 @@ export class Chess extends GameEngine {
         }
     }
 
+    simulate(state, fromR, fromC, toR, toC) {
+        let newState = JSON.parse(JSON.stringify(state));
+        newState[0][toR][toC] = newState[0][fromR][fromC];
+        newState[0][fromR][fromC] = "";
+        newState[1] = newState[1] ? 0 : 1;
+        return newState;
+    }
+
+    isKingInCheck(state, kingR, kingC) {
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                if (state[0][row][col] == "") {
+                    continue;
+                }
+                if (state[1] == Number(state[0][row][col][0]) && this.canAttack(state, row, col, kingR, kingC)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    canAttack(state, row, col, kingRow, kingCol) {
+        let piece = state[0][row][col][1];
+        switch (piece) {
+            case '♟': //pawn
+                let direction = state[1] ? 1 : -1;
+                if (row + direction === kingRow && Math.abs(col - kingCol) === 1) { // capture diagonally
+                    return true;
+                }
+            case '♚': //king
+                return this.kingCanMove(state, row, col, kingRow, kingCol);
+            case '♛': //queen
+                return this.queenCanMove(state, row, col, kingRow, kingCol);
+            case '♜': //rock
+                return this.rockCanMove(state, row, col, kingRow, kingCol);
+            case '♝': //bishop
+                return this.bishopCanMove(state, row, col, kingRow, kingCol);
+            case '♞': //knight
+                return this.knightCanMove(state, row, col, kingRow, kingCol);
+        }
+    }
+
     pawnCanMove(state, fromR, fromC, toR, toC) {
         let direction = state[1] ? 1 : -1;
         if (fromC === toC) {
             if (fromR + direction === toR && state[0][toR][toC] == '') { // one move
-                return true
+                return true;
             }
             if (fromR + 2 * direction === toR && fromR === (state[1] ? 1 : 6) &&
                 state[0][toR][toC] == '' && state[0][fromR + direction][toC] == "") { // double move
-                return true
+                return true;
             }
         }
         if (fromR + direction === toR && Math.abs(fromC - toC) === 1) { // capture diagonally
@@ -204,6 +263,7 @@ export class Chess extends GameEngine {
             }
             return true;
         }
+        return false;
     }
 
     bishopCanMove(state, fromR, fromC, toR, toC) {
@@ -221,6 +281,7 @@ export class Chess extends GameEngine {
             }
             return true;
         }
+        return false;
     }
 
     knightCanMove(state, fromR, fromC, toR, toC) {
@@ -228,5 +289,6 @@ export class Chess extends GameEngine {
             (Math.abs(fromR - toR) === 1 && Math.abs(fromC - toC) === 2)) {
             return true;
         }
+        return false;
     }
 }
