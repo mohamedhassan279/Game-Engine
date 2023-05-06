@@ -1,5 +1,5 @@
 import { GameEngine } from '../GameEngine.js';
-export class EightQueens extends GameEngine{
+export class Eight_Queens extends GameEngine{
     constructor() {
         super();
     }
@@ -26,18 +26,27 @@ export class EightQueens extends GameEngine{
 
         const board = document.createElement("div");
         board.className="board";
+        const cols=document.createElement("div");
+        cols.className="cols";
         container.appendChild(board);
-
+        container.appendChild(cols);
+        
         
         for(let i = 0;i<8;i++)
         {
+            var r=document.createElement("div");
+            
+
+            r.className="r";
+            
+            r.innerText=(8-i);
+            r.style.fontSize="150%";
+            board.appendChild(r);
             for(let j = 0;j<8;j++)
             {
                 const cell = document.createElement("div");
                 cell.className="cell";
                 cell.id = String(8-i).concat(String.fromCharCode('a'.charCodeAt(0)+j));
-
-                
                 if(state[0][i][j]=='♛'){cell.innerText='♛';cell.style.fontSize="150%";}
                 if (i == 0) cell.style.borderTop = "none";
                 if (i == 7) cell.style.borderBottom = "none";
@@ -53,10 +62,19 @@ export class EightQueens extends GameEngine{
                 }
                 board.appendChild(cell);
             }
+            
+        }
+        for(let i=0;i<8;i++)
+        {
+            var c=document.createElement("div");
+            c.className="c";
+            c.innerText=String.fromCharCode('a'.charCodeAt(0)+i);
+            c.style.fontSize="150%";
+            c.style.font="italic";
+            cols.appendChild(c);
         }
     }
     controller(state ,input) {
-        console.log(state, input);
         if(input === null||input === undefined || (input.length != 2 && input.length != 9)){console.log(state);
             return [state,false];}
         try{
@@ -121,7 +139,6 @@ export class EightQueens extends GameEngine{
                     return [state,false];
                 }
             }
-            return [state,false];
         }
         catch(error){console.log(state);
             return [state,false];}
@@ -187,5 +204,8 @@ export class EightQueens extends GameEngine{
 // let set = new Set();
 // set.add('1a');
 // console.log(set.has('1a'));
+
+
+
 
 
