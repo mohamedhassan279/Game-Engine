@@ -26,10 +26,9 @@ export class EightQueens extends GameEngine{
 
         const board = document.createElement("div");
         board.className="board";
-        const cols=document.createElement("div");
-        cols.className="cols";
+        
         container.appendChild(board);
-        container.appendChild(cols);
+        
         
         
         for(let i = 0;i<8;i++)
@@ -64,15 +63,23 @@ export class EightQueens extends GameEngine{
             }
             
         }
-        for(let i=0;i<8;i++)
+        for(let i=0;i<9;i++)
         {
+            if(i==0)
+            {
+                var c=document.createElement("div");
+                c.className="c";
+                board.appendChild(c);
+                continue;
+            }
             var c=document.createElement("div");
             c.className="c";
-            c.innerText=String.fromCharCode('a'.charCodeAt(0)+i);
+            c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
             c.style.fontSize="150%";
             c.style.font="italic";
-            cols.appendChild(c);
+            board.appendChild(c);
         }
+        
     }
     controller(state ,input) {
         if(input === null||input === undefined || (input.length != 2 && input.length != 9)){console.log(state);
