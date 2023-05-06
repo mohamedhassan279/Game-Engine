@@ -12,7 +12,7 @@ export class GameEngine {
         let state = this.init();
         this.drawer(state);
         while (true) {
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 1000));
             let input = prompt("Enter your play: ");
             let response = this.controller(state, input);
             state = response[0];

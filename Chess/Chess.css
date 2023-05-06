@@ -14,6 +14,8 @@ body{
     width: 350px;
     height: 350px;
     margin: auto;
+    border: 4px solid rgb(60, 61, 60);
+    border-style:ridge;
 }
 
 .cell {

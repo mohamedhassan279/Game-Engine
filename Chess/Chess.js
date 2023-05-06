@@ -47,12 +47,12 @@ export class Chess extends GameEngine {
                 if (state[0][i][j] != "" && state[0][i][j][0] == '0') {
                     cell.style.webkitTextFillColor = "#F9F9F9";
                     cell.style.webkitTextStrokeColor = "black";
-                    cell.style.webkitTextStrokeWidth = "0.25px"
+                    cell.style.webkitTextStrokeWidth = "0.35px"
                 }
                 else if (state[0][i][j] != "" && state[0][i][j][0] == '1') {
                     cell.style.webkitTextFillColor = "#575452";
                     cell.style.webkitTextStrokeColor = "black";
-                    cell.style.webkitTextStrokeWidth = "0.25px"
+                    cell.style.webkitTextStrokeWidth = "0.35px"
                 }
                 if ((i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1)) cell.style.backgroundColor = "#EBECD0";
                 else cell.style.backgroundColor = "#779556";
