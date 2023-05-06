@@ -1,5 +1,5 @@
 import { GameEngine } from '../GameEngine.js';
-export class Eight_Queens extends GameEngine{
+export class EightQueens extends GameEngine{
     constructor() {
         super();
     }
