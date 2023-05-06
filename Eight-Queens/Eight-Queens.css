@@ -66,12 +66,13 @@
 }
 .board {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(8, 1fr);
-    width: 300px;
-    height: 300px;
+    width: 337.5px;
+    height: 337.5px;
     margin: auto;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
+    
 }
 
 .cell {
@@ -82,4 +83,25 @@
     align-items: center;
     justify-content: center;
     font-family: Cursive, Sans-serif;
+}
+.r{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Cursive, Sans-serif;
+}
+.c{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Cursive, Sans-serif;
+    
+}
+.cols {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  width: 300px;
+  height: 37.5px;
+  margin: auto 175px;
+  
 }
