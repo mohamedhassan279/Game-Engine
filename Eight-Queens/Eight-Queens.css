@@ -67,7 +67,7 @@
 .board {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
-    grid-template-rows: repeat(8, 1fr);
+    grid-template-rows: repeat(9, 1fr);
     width: 337.5px;
     height: 337.5px;
     margin: auto;
@@ -96,12 +96,4 @@
     justify-content: center;
     font-family: Cursive, Sans-serif;
     
-}
-.cols {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  width: 300px;
-  height: 37.5px;
-  margin: auto 510px;
-  
 }
