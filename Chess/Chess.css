@@ -11,9 +11,10 @@ body{
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(9, 1fr);
-    width: 350px;
-    height: 350px;
+    width: 380px;
+    height: 380px;
     margin: auto;
+    margin-top: -1%;
 }
 
 .cell {
@@ -26,8 +27,6 @@ body{
 .player{
     text-align: center;
     font-family: sans-serif;
-    font-weight: 600;
-    font-size: 30px;
     font-family: Cursive, Sans-serif;
     margin-left: 3.5%;
 }
