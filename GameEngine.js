@@ -11,8 +11,8 @@ export class GameEngine {
     async loop() {
         let state = this.init();
         this.drawer(state);
+        await new Promise(resolve => setTimeout(resolve, 500));
         while (true) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
             let input = prompt("Enter your play: ");
             let response = this.controller(state, input);
             state = response[0];
@@ -24,7 +24,7 @@ export class GameEngine {
             else {
                 alert("Invalid Move!! Try again...");
             }
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 500));
         }
     }
 
