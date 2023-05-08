@@ -13,8 +13,8 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     margin: auto;
 }
 
@@ -36,19 +36,21 @@ body {
     font-weight: 600;
     font-size: 30px;
     font-family: Cursive, Sans-serif;
-    margin-left: 6%;
+    margin-left: 7.2%;
 }
 
 .r {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
+    padding-right: 15%;
     font-family: Cursive, Sans-serif;
 }
 
 .c {
     display: flex;
-    align-items: center;
+    align-items:start;
+    padding-top: 15%;
     justify-content: center;
     font-family: Cursive, Sans-serif;
 }
