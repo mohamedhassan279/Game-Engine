@@ -160,14 +160,13 @@ export class Sudoku extends GameEngine {
             r.className="r";
             
             r.innerText=(9-i);
-            r.style.fontSize="150%";
+            r.style.fontSize="100%";
             board.appendChild(r);
             for (let j = 0; j < 9; j++) {
                 const cell = document.createElement("div");
                 cell.className = "cell";
                 cell.id = String(9 - i).concat(String.fromCharCode('a'.charCodeAt(0) + j));
                 if(state[0][i][j] != "") cell.innerText = Number(state[0][i][j]);
-                // cell.style.color = state[0][i][j] == "X" ? "#18FF21" : "#FF18B7";
                 if(i%3 == 2) cell.style.borderBottomWidth = "2px";
                 if(i%3 == 0) cell.style.borderTopWidth = "2px";
                 if(j%3 == 2) cell.style.borderRightWidth = "2px";
@@ -189,7 +188,7 @@ export class Sudoku extends GameEngine {
             var c=document.createElement("div");
             c.className="c";
             c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
-            c.style.fontSize="150%";
+            c.style.fontSize="100%";
             c.style.font="italic";
             board.appendChild(c);
         }
