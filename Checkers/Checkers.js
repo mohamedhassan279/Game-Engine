@@ -21,7 +21,7 @@ export class Checkers extends GameEngine {
                 }
             }
         }
-        return [state, 1];
+        return [state, 0];
     }
 
     drawer(state) {
@@ -34,8 +34,8 @@ export class Checkers extends GameEngine {
 
         const player = document.createElement("h2");
         player.className = "player";
-        player.innerText = (state[1] == 1) ? "Player 1 turn" : "Player 2 turn";
-        player.style.color = (state[1] == 1) ? "red" : "white";
+        player.innerText = (!state[1]) ? "Player 1 turn" : "Player 2 turn";
+        player.style.color = (!state[1]) ? "red" : "white";
 
         const board = document.createElement("div");
         board.className = "board";
@@ -95,6 +95,7 @@ export class Checkers extends GameEngine {
     }
 
     controller(state, input) {
+        let turn = (!state[1]) ? 1 : 2;
         if (input === null || input === undefined || input.length != 5) {
             return [state, false];
         }
@@ -108,28 +109,26 @@ export class Checkers extends GameEngine {
                 return [state, false];
             }
 
-            if ((state[1] == 1 && state[0][fromR][fromC] != 1) || (state[1] == 2 && state[0][fromR][fromC] != 2)) {
+            if ((turn  == 1 && state[0][fromR][fromC] != 1) || (turn  == 2 && state[0][fromR][fromC] != 2)) {
                 //to ensure that the right checker selected by the right player
                 return [state, false];
             }
 
-            let moveStatus = this.validate(state[1], fromR, fromC, toR, toC, state[0]);
+            let moveStatus = this.validate(turn , fromR, fromC, toR, toC, state[0]);
 
             if (moveStatus == "not valid") {
                 return [state, false]
             } else if (moveStatus == "check for jmp") {
-                let check = this.check_for_jmp(fromR, fromC, state[1], state[0]);
+                let check = this.check_for_jmp(fromR, fromC, turn , state[0]);
                 if (check == null) {
                     return [state, false]
                 }
-                this.jmp_recursively(fromR, fromC, state[0], state[1]);
-                state[1] = (state[1] == 1) ? 2 : 1;
+                this.jmp_recursively(fromR, fromC, state[0], turn );
                 return [state, true];
             } else { //just move
                 //make the simple move then check for a jump
                 state[0][fromR][fromC] = 0;
-                state[0][toR][toC] = state[1];
-                state[1] = (state[1] == 1) ? 2 : 1;
+                state[0][toR][toC] = turn;
                 return [state, true];
             }
         } catch {
