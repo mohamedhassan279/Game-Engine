@@ -91,7 +91,6 @@ export class TicTacToe extends GameEngine {
             }
             if (state[0][row][col] == "") {
                 state[0][row][col] = state[1] ? 'O' : 'X';
-                state[1] = state[1] ? 0 : 1;
                 return [state, true];
             }
             else {

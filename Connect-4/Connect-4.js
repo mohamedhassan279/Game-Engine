@@ -67,7 +67,6 @@ export class Connect_Four extends GameEngine{
         for (let i = 5 ; i >= 0; i--) {
             if (state[0][i][input] == "white") {
                 state[0][i][input] = state[1] ? "yellow" : "red";
-                state[1] = state[1] ? 0 : 1;
                 return [state, true];
             }
         }

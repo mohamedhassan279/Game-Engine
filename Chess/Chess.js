@@ -40,10 +40,10 @@ export class Chess extends GameEngine {
 
         for (let i = 0; i < 8; i++) {
 
-            var r=document.createElement("div");
-            r.className="r";
-            r.innerText=(8-i);
-            r.style.fontSize="100%";
+            var r = document.createElement("div");
+            r.className = "r";
+            r.innerText = (8 - i);
+            r.style.fontSize = "100%";
             board.appendChild(r);
 
             for (let j = 0; j < 8; j++) {
@@ -70,26 +70,25 @@ export class Chess extends GameEngine {
                 board.appendChild(cell);
             }
         }
-        for(let i=0;i<9;i++)
-        {
-            if(i==0)
-            {
-                var c=document.createElement("div");
-                c.className="c";
+        for (let i = 0; i < 9; i++) {
+            if (i == 0) {
+                var c = document.createElement("div");
+                c.className = "c";
                 board.appendChild(c);
                 continue;
             }
-            var c=document.createElement("div");
-            c.className="c";
-            c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
-            c.style.fontSize="100%";
-            c.style.font="italic";
+            var c = document.createElement("div");
+            c.className = "c";
+            c.innerText = String.fromCharCode('a'.charCodeAt(0) + i - 1);
+            c.style.fontSize = "100%";
+            c.style.font = "italic";
             board.appendChild(c);
         }
     }
 
     controller(state, input) {
         if (input === null || input === undefined || input.length != 5) {
+            console.log("size");
             return [state, false];
         }
         try {
@@ -97,6 +96,7 @@ export class Chess extends GameEngine {
             let fromC = input[1].charCodeAt(0) - 'a'.charCodeAt(0);
             let toR = 8 - Number(input[3]);
             let toC = input[4].charCodeAt(0) - 'a'.charCodeAt(0);
+            console.log(fromR, fromC, toR, toC);
             if (fromR < 0 || fromR >= 8 || fromC < 0 || fromC >= 8
                 || toR < 0 || toR >= 8 || toC < 0 || toC >= 8) {
                 return [state, false];
@@ -111,6 +111,8 @@ export class Chess extends GameEngine {
                     return [state, false];
                 }
                 let tempState = this.simulate(state, fromR, fromC, toR, toC);
+                console.log("state", state);
+                console.log("temp", tempState);
                 let kingR, kingC;
                 for (let row = 0; row < 8; row++) {
                     for (let col = 0; col < 8; col++) {
@@ -129,11 +131,12 @@ export class Chess extends GameEngine {
                 }
                 state[0][toR][toC] = state[0][fromR][fromC];
                 state[0][fromR][fromC] = "";
-                state[1] = state[1] ? 0 : 1;
+                // state[1] = state[1] ? 0 : 1;
                 return [state, true];
             }
         }
         catch (error) {
+            console.log(error);
             return [state, false];
         }
 
@@ -158,14 +161,21 @@ export class Chess extends GameEngine {
     }
 
     simulate(state, fromR, fromC, toR, toC) {
-        let newState = JSON.parse(JSON.stringify(state));
-        newState[0][toR][toC] = newState[0][fromR][fromC];
-        newState[0][fromR][fromC] = "";
-        newState[1] = newState[1] ? 0 : 1;
-        return newState;
+        let newState = [];
+        for (let i = 0; i < 8; i++) {
+            newState[i] = [];
+            for (let j = 0; j < 8; j++) {
+                newState[i][j] = state[0][i][j];
+            }
+        }
+        newState[toR][toC] = newState[fromR][fromC];
+        newState[fromR][fromC] = "";
+        let turn = state[1] ? 0 : 1;
+        return [newState, turn];
     }
 
     isKingInCheck(state, kingR, kingC) {
+        console.log(kingR, kingC);
         for (let row = 0; row < 8; row++) {
             for (let col = 0; col < 8; col++) {
                 if (state[0][row][col] == "") {
@@ -181,6 +191,8 @@ export class Chess extends GameEngine {
 
     canAttack(state, row, col, kingRow, kingCol) {
         let piece = state[0][row][col][1];
+        console.log("r", row, col);
+        console.log("kkk", state);
         switch (piece) {
             case '♟': //pawn
                 let direction = state[1] ? 1 : -1;
@@ -230,16 +242,21 @@ export class Chess extends GameEngine {
     queenCanMove(state, fromR, fromC, toR, toC) {
         if (Math.abs(fromR - toR) === Math.abs(fromC - toC)) { // diagonal
             let rowDir = toR > fromR ? 1 : -1;
-            let colDir = toC > toR ? 1 : -1;
+            let colDir = toC > fromC ? 1 : -1;
+            console.log("to from: ", fromR, fromC, toR, toC)
             let i = fromR + rowDir;
             let j = fromC + colDir;
             while (i !== toR && j !== toC) {
+                console.log("i", i, "j", j);
                 if (state[0][i][j] != "") {
+                    console.log("state", state);
+                    console.log("false")
                     return false; // Obstruction detected
                 }
                 i += rowDir;
                 j += colDir;
             }
+            console.log("true");
             return true;
         }
         if (fromR === toR) { // horizontal
@@ -296,7 +313,7 @@ export class Chess extends GameEngine {
     bishopCanMove(state, fromR, fromC, toR, toC) {
         if (Math.abs(fromR - toR) === Math.abs(fromC - toC)) { // diagonal
             let rowDir = toR > fromR ? 1 : -1;
-            let colDir = toC > toR ? 1 : -1;
+            let colDir = toC > fromC ? 1 : -1;
             let i = fromR + rowDir;
             let j = fromC + colDir;
             while (i !== toR && j !== toC) {

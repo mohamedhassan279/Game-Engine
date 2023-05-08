@@ -18,12 +18,13 @@ export class GameEngine {
             state = response[0];
             let valid = response[1];
             if (valid) {
+                state = this.alternatePlayer(state);
                 this.drawer(state);
             }
             else {
                 alert("Invalid Move!! Try again...");
             }
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            await new Promise(resolve => setTimeout(resolve, 1000));
         }
     }
 
@@ -35,7 +36,8 @@ export class GameEngine {
 
     }
 
-    alternatePlayer(turn) {
-        return !turn;
+    alternatePlayer(state) {
+        state[1] = !state[1];
+        return state;
     }
 }
