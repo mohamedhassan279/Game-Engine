@@ -160,8 +160,8 @@ export class Sudoku extends GameEngine {
             r.className="r";
             
             r.innerText=(9-i);
-            r.style.fontSize="85%";
-            r.style.color = "#333036";
+            // r.style.fontSize="85%";
+            // r.style.color = "#333036";
             board.appendChild(r);
             for (let j = 0; j < 9; j++) {
                 const cell = document.createElement("div");
@@ -189,9 +189,9 @@ export class Sudoku extends GameEngine {
             var c=document.createElement("div");
             c.className="c";
             c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
-            c.style.fontSize="85%";
+            // c.style.fontSize="85%";
             c.style.font="italic";
-            c.style.color = "#333036";
+            // c.style.color = "#333036";
             board.appendChild(c);
         }
     }

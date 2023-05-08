@@ -32,12 +32,14 @@ body{
     align-items: center;
     justify-content: center;
     font-family: Cursive, Sans-serif;
-    
-    /* background: linear-gradient(to right, #43c6ac, #191654); */
+    font-size: 85%;
+    color: #361f1f;
 }
 .c{
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: Cursive, Sans-serif;
+    font-size: 85%;
+    color: #361f1f;
 }
