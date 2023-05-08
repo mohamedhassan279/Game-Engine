@@ -39,6 +39,14 @@ export class TicTacToe extends GameEngine {
         container.appendChild(board);
 
         for (let i = 0; i < 3; i++) {
+
+            var r=document.createElement("div");
+            r.className="r";
+            r.innerText=(3-i);
+            r.style.fontSize="100%";
+            r.style.color = "yellow";
+            board.appendChild(r);
+
             for (let j = 0; j < 3; j++) {
                 const cell = document.createElement("div");
                 cell.className = "cell";
@@ -51,6 +59,24 @@ export class TicTacToe extends GameEngine {
                 if (j == 2) cell.style.borderRight = "none";
                 board.appendChild(cell);
             }
+        }
+        for(let i=0; i<4;i++)
+        {
+            if(i==0)
+            {
+                var c=document.createElement("div");
+                c.className="c";
+                
+                board.appendChild(c);
+                continue;
+            }
+            var c=document.createElement("div");
+            c.className="c";
+            c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
+            c.style.fontSize="100%";
+            c.style.font="italic";
+            c.style.color = "yellow";
+            board.appendChild(c);
         }
     }
     controller(state, input) {

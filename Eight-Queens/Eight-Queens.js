@@ -39,7 +39,7 @@ export class EightQueens extends GameEngine{
             r.className="r";
             
             r.innerText=(8-i);
-            r.style.fontSize="150%";
+            r.style.fontSize="100%";
             board.appendChild(r);
             for(let j = 0;j<8;j++)
             {
@@ -53,7 +53,7 @@ export class EightQueens extends GameEngine{
                 if (j == 7) cell.style.borderRight = "none";
                 if ((i + j) % 2 === 0)
                 {
-                    cell.style.background = "#eedc82";
+                    cell.style.background = "#EBECD0";
                 }
                 else
                 {
@@ -75,7 +75,7 @@ export class EightQueens extends GameEngine{
             var c=document.createElement("div");
             c.className="c";
             c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
-            c.style.fontSize="150%";
+            c.style.fontSize="100%";
             c.style.font="italic";
             board.appendChild(c);
         }

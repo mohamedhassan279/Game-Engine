@@ -39,6 +39,13 @@ export class Chess extends GameEngine {
         container.appendChild(board);
 
         for (let i = 0; i < 8; i++) {
+
+            var r=document.createElement("div");
+            r.className="r";
+            r.innerText=(8-i);
+            r.style.fontSize="100%";
+            board.appendChild(r);
+
             for (let j = 0; j < 8; j++) {
                 const cell = document.createElement("div");
                 cell.className = "cell";
@@ -56,8 +63,28 @@ export class Chess extends GameEngine {
                 }
                 if ((i % 2 == 0 && j % 2 == 0) || (i % 2 == 1 && j % 2 == 1)) cell.style.backgroundColor = "#EBECD0";
                 else cell.style.backgroundColor = "#779556";
+                if (i == 0) cell.style.borderTop = "4px ridge rgb(60, 61, 60)";
+                if (i == 7) cell.style.borderBottom = "4px ridge rgb(60, 61, 60)";
+                if (j == 0) cell.style.borderLeft = "4px ridge rgb(60, 61, 60)";
+                if (j == 7) cell.style.borderRight = "4px ridge rgb(60, 61, 60)";
                 board.appendChild(cell);
             }
+        }
+        for(let i=0;i<9;i++)
+        {
+            if(i==0)
+            {
+                var c=document.createElement("div");
+                c.className="c";
+                board.appendChild(c);
+                continue;
+            }
+            var c=document.createElement("div");
+            c.className="c";
+            c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
+            c.style.fontSize="100%";
+            c.style.font="italic";
+            board.appendChild(c);
         }
     }
 
