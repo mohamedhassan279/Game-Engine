@@ -154,6 +154,14 @@ export class Sudoku extends GameEngine {
         container.appendChild(board);
 
         for (let i = 0; i < 9; i++) {
+            var r=document.createElement("div");
+            
+
+            r.className="r";
+            
+            r.innerText=(9-i);
+            r.style.fontSize="150%";
+            board.appendChild(r);
             for (let j = 0; j < 9; j++) {
                 const cell = document.createElement("div");
                 cell.className = "cell";
@@ -167,6 +175,23 @@ export class Sudoku extends GameEngine {
                 if(state[0][i][j][0] == '0') cell.style.backgroundColor = "rgb(158, 155, 155)";
                 board.appendChild(cell);
             }
+        }
+        for(let i=0;i<10;i++)
+        {
+            if(i==0)
+            {
+                var c=document.createElement("div");
+                c.className="c";
+                
+                board.appendChild(c);
+                continue;
+            }
+            var c=document.createElement("div");
+            c.className="c";
+            c.innerText=String.fromCharCode('a'.charCodeAt(0)+i-1);
+            c.style.fontSize="150%";
+            c.style.font="italic";
+            board.appendChild(c);
         }
     }
     controller(state, input) {
